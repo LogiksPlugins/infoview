@@ -1,0 +1,43 @@
+.infoviewbox {
+    margin-bottom: 20px;
+    position: relative;
+}
+.infoviewbox .infoviewbox-content {
+    padding: 10px;
+    background: white;
+    display: block;
+}
+
+.infoviewbox pre {
+  border:0px;
+  box-shadow: none;
+  font-family: inherit;
+}
+
+.infoviewbox label {
+  color: #AAA;
+  font-weight: 300;
+}
+
+.infoview-content {
+  
+}
+.infoview-content .form-actions {
+/*   padding-right: 20px; */
+/*   padding-left: 20px; */
+  margin-bottom:5px;
+}
+.infoview-content .form-actions button {
+  margin-left:20px;
+}
+.infoview-content .form-actions .form-icon {
+
+}
+.infoview-content .form-actions .form-icon.left {
+    margin-left: 5px;
+}
+.infoview-content .form-actions .form-icon.right {
+    margin-right: 5px;
+}
+
+

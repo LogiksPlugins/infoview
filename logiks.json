@@ -1,0 +1,28 @@
+{
+    "name": "Logiks InfoView",
+    "version": "1.0.0",
+    "status": "alpha",
+    "type": "module",
+    "package":"olgks.infoview",
+    "description": "This plugin helps visualizing information in organized way using tabs, accordions, graphs. This uses forms.json specs for doing the same with some custom tags.",
+    "keywords": "logiks,modules,infoview",
+    "license": "MIT",
+    "marketid": "",
+    "homepage": "https://github.com/LogiksPlugins/infoview",
+    "bugs": "https://github.com/LogiksPlugins/infoview/issues",
+    "private": false,
+    "dependencies": {
+        "core": "+4.0.0",
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/LogiksPlugins/infoview.git"
+    },
+    "authors": [
+        {
+            "name": "OpenLogiks Team",
+            "email": "admin@openlogiks.org",
+            "authorid":"olgksadmin"
+        }
+    ]
+}
