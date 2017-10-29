@@ -85,3 +85,9 @@ $(function() {
     }
   });
 });
+function viewpaneContentShown(src) {
+	callBack=$(src).data("onshowncallback");
+	if(callBack!=null && typeof window[callBack]=="function") {
+		window[callBack](src);
+	}
+}

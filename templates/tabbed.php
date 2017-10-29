@@ -8,33 +8,34 @@ if(!isset($formConfig['infoview']['groups'])) {
 foreach($formConfig['infoview']['groups'] as $a=>$b) {
 	if(!isset($b['label'])) $b['label']=toTitle($a);
 	if(!isset($b['group'])) $b['group']=str_replace(" ","_",$b['label']);
-	
+
 	$b['fieldkey']=$a;
-	
+
 	if($formConfig['secure']) {
 		$access=checkUserRoles($formConfig['srckey'],$b['group'],"ACCESS");
 		if(!$access) {
 			continue;
 		}
 	}
-	
+
 	$fieldGroups[$b['group']][]=$b;
 }
 
 $groups=array_keys($fieldGroups);
 // printArray($fieldGroups);printArray($groups);
 $hiddenItems=[];
-echo '<div class="infoviewContainer infoviewContainerTabs"><ul class="nav nav-tabs">';
+$infoHash=md5(rand());
+echo '<div id="'.$infoHash.'" class="infoviewContainer infoviewContainerTabs"><ul class="nav nav-tabs">';
 foreach ($groups as $nx=>$fkey) {
 	$groupConfig=$fieldGroups[$fkey];
 	$title=toTitle(_ling($fkey));
 	if($nx==0) {
-		echo "<li role='presentation' class='active'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}'  data-toggle='tab'>{$title}</a></li>";
+		echo "<li role='presentation' class='active'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}' data-toggle='tab' onclick='viewpaneContentShown(this)' >{$title}</a></li>";
 	} else {
 		if(isset($groupConfig[0]) && isset($groupConfig[0]['hidden']) && $groupConfig[0]['hidden']) {
-			$hiddenItems[]="<li role='presentation'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}'  data-toggle='tab'>{$title}</a></li>";
+			$hiddenItems[]="<li role='presentation'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}'  data-toggle='tab' onclick='viewpaneContentShown(this)'>{$title}</a></li>";
 		} else {
-			echo "<li role='presentation'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}'  data-toggle='tab'>{$title}</a></li>";
+			echo "<li role='presentation'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}'  data-toggle='tab' onclick='viewpaneContentShown(this)'>{$title}</a></li>";
 		}
 	}
 }

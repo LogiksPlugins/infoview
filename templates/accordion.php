@@ -16,25 +16,25 @@ if(count($fieldGroups)>1) {
 		echo '<div class="panel-heading" role="tab" id="heading'.$panelID.'">';
 		echo '<h4 class="panel-title">';
 		if($nx==0) {
-		echo '<a role="button" data-toggle="collapse" aria-expanded="true" aria-controls="collapse'.$panelID.'" data-parent="#accordion'.$accordionID.'" href="#collapse'.$panelID.'" >'.$title.'</a>';
+			echo '<a role="button" data-toggle="collapse" aria-expanded="true" aria-controls="collapse'.$panelID.'" data-parent="#accordion'.$accordionID.'" href="#collapse'.$panelID.'" onclick="viewpaneContentShown(this)" >'.$title.'</a>';
 		} else {
-		echo '<a role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse'.$panelID.'" data-parent="#accordion'.$accordionID.'" href="#collapse'.$panelID.'" >'.$title.'</a>';
+			echo '<a role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse'.$panelID.'" data-parent="#accordion'.$accordionID.'" href="#collapse'.$panelID.'" onclick="viewpaneContentShown(this)" >'.$title.'</a>';
 		}
 		echo '</h4>';
 		echo '</div>';
 
 		if($nx==0) {
-		echo '<div id="collapse'.$panelID.'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading'.$panelID.'">';
+			echo '<div id="collapse'.$panelID.'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading'.$panelID.'">';
 		} else {
-		echo '<div id="collapse'.$panelID.'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'.$panelID.'">';
+			echo '<div id="collapse'.$panelID.'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'.$panelID.'">';
 		}
 
 		echo '<div class="panel-body">';
-
+		echo '<div class="infoviewbox"><div class="infoviewbox-content">';
 		echo "<div class='row'>";
 		echo getInfoViewFieldset($fieldGroups[$fkey],$formData,$formConfig['dbkey']);
 		echo "</div>";
-
+		echo '</div></div>';
 		echo '</div>';
 		echo '</div>';
 
