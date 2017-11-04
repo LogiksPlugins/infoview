@@ -28,10 +28,16 @@ $(function() {
           if(cmdX[1]!=null) {
             cmdX[1]=cmdX[1].replace("{hashid}",hash).replace("{gkey}",gkey);
 
-            showLoader();
-            lgksOverlayURL(_link("popup/"+cmd+"/"+cmdX[1]),title,function() {
-                hideLoader();
-              });
+            if(cmd=="forms") {
+		lgksOverlayFrame(_link("modules/"+cmd+"/"+cmdX[1]),title,function() {
+	                hideLoader();
+	          });
+	    } else {
+		showLoader();
+	        lgksOverlayURL(_link("popup/"+cmd+"/"+cmdX[1]),title,function() {
+	                hideLoader();
+	              });
+	    }
           }
         break;
         case "page":
