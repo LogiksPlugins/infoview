@@ -7,7 +7,14 @@
     background: white;
     display: block;
 }
-
+.infoviewbox .infoviewBox-accordion {
+  
+}
+.infoviewbox .infoview-content-simple {
+  padding: 20px;
+  background: white;
+  display: block;
+}
 .infoviewbox pre {
   border:0px;
   box-shadow: none;
@@ -41,3 +48,10 @@
 }
 
 
+.infoviewbox .panel-group .panel+.panel {
+  margin-top: 0px;
+}
+
+.infoviewContainerTabs .nav.nav-tabs .fa-exclamation-triangle {
+  font-size:10px;
+}

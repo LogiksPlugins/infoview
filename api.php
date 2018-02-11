@@ -166,6 +166,9 @@ if(!function_exists("findInfoView")) {
 				__DIR__."/templates/{$formConfig['template']}.php"
 			];
 		
+		$dcode=$_ENV['INFOVIEW-REFHASH'];
+		$dtuid=$formKey;
+		
 		//printArray($templateArr);return;
 		foreach ($templateArr as $f) {
 			if(file_exists($f) && is_file($f)) {
@@ -230,6 +233,12 @@ if(!function_exists("findInfoView")) {
 			if(!isset($field['fieldkey'])) {
 				continue;
 			}
+			if(substr($field['fieldkey'],0,2)=="__") continue;
+			
+			if(isset($field['policy']) && strlen($field['policy'])>0) {
+				$allow=checkUserPolicy($field['policy']);
+				if(!$allow) continue;
+			}
 			
 			if(!isset($field['label'])) {
 				$fieldKey=$field['fieldkey'];
@@ -273,6 +282,10 @@ if(!function_exists("findInfoView")) {
 	}
 
 	function getInfoViewField($fieldinfo,$data,$dbKey="app") {
+		if(isset($fieldinfo['policy']) && strlen($fieldinfo['policy'])>0) {
+			$allow=checkUserPolicy($fieldinfo['policy']);
+			if(!$allow) return "";
+		}
 		$formKey=$fieldinfo['fieldkey'];
 		if(!isset($data[$formKey])) {
 			if(isset($fieldinfo['default'])) {
@@ -636,6 +649,10 @@ if(!function_exists("findInfoView")) {
   function getInfoViewActions($actions=[]) {
     $html="";
 		foreach ($actions as $key => $button) {
+			if(isset($button['policy']) && strlen($button['policy'])>0) {
+				$allow=checkUserPolicy($button['policy']);
+				if(!$allow) continue;
+			}
 			if(!isset($button['class'])) $button['class']="btn btn-primary";
 			if(isset($button['label'])) $label=$button['label'];
 			else $label=toTitle(_ling($key));

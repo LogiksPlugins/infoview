@@ -12,45 +12,33 @@ $(function() {
     cmd=cmd.split("@");
 		cmd=cmd[0];
 		src=this;
+		
+		parentObject=$(src).closest(".infoTableView");
+		if(parentObject.length<=0) {
+			parentObject=$(src).closest(".infoviewContainer");
+		}
+		hash=parentObject.data('dcode');
+		gkey=parentObject.data('dtuid');
+		title=$(src).text();
+		if(title==null || title.length<=0) {
+			title=$(src).attr("title");
+		}
+		if(title==null || title.length<=0) {
+			title="Dialog";
+		}
+		
 		switch(cmd) {
         case "forms":case "reports":case "infoview":
-          hash=$(src).closest(".infoTableView").data('dcode');
-          gkey=$(src).closest(".infoTableView").data('dtuid');
-          title=$(src).text();
-          if(title==null || title.length<=0) {
-            title=$(src).attr("title");
-          }
-          if(title==null || title.length<=0) {
-            title="Dialog";
-          }
-
           cmdX=cmdOriginalX.split("@");
           if(cmdX[1]!=null) {
             cmdX[1]=cmdX[1].replace("{hashid}",hash).replace("{gkey}",gkey);
 
-            if(cmd=="forms") {
-		lgksOverlayFrame(_link("modules/"+cmd+"/"+cmdX[1]),title,function() {
-	                hideLoader();
-	          });
-	    } else {
-		showLoader();
-	        lgksOverlayURL(_link("popup/"+cmd+"/"+cmdX[1]),title,function() {
+						lgksOverlayFrame(_link("modules/"+cmd+"/"+cmdX[1]),title,function() {
 	                hideLoader();
 	              });
-	    }
           }
         break;
         case "page":
-          hash=$(src).closest(".infoTableView").data('dcode');
-          gkey=$(src).closest(".infoTableView").data('dtuid');
-          title=$(src).text();
-          if(title==null || title.length<=0) {
-            title=$(src).attr("title");
-          }
-          if(title==null || title.length<=0) {
-            title="Dialog";
-          }
-
           cmdX=cmdOriginalX.split("@");
           if(cmdX[1]!=null) {
             cmdX[1]=cmdX[1].replace("{hashid}",hash).replace("{gkey}",gkey);
@@ -58,16 +46,6 @@ $(function() {
           }
           break;
         case "module":case "popup":
-          hash=$(src).closest(".infoTableView").data('dcode');
-          gkey=$(src).closest(".infoTableView").data('dtuid');
-          title=$(src).text();
-          if(title==null || title.length<=0) {
-            title=$(src).attr("title");
-          }
-          if(title==null || title.length<=0) {
-            title="Dialog";
-          }
-
           cmdX=cmdOriginalX.split("@");
           if(cmdX[1]!=null) {
             cmdX[1]=cmdX[1].replace("{hashid}",hash).replace("{gkey}",gkey);
@@ -75,8 +53,7 @@ $(function() {
             if(cmd=="module" || cmd=="modules") {
               top.openLinkFrame(title,_link("modules/"+cmdX[1]),true);
             } else {
-              showLoader();
-              lgksOverlayURL(_link("popup/"+cmdX[1]),title,function() {
+              lgksOverlayFrame(_link("popup/"+cmdX[1]),title,function() {
                   hideLoader();
                 });
             }
