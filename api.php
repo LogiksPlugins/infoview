@@ -166,6 +166,7 @@ if(!function_exists("findInfoView")) {
 		
 		$formKey=$formConfig['infoviewkey'];
 		$_SESSION['INFOVIEW'][$formKey]=$formConfig;
+		$_ENV['FORMKEY']=$formKey;
 
 		//Loading Form Template
 		$templateArr=[
