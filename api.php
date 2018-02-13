@@ -119,8 +119,10 @@ if(!function_exists("findInfoView")) {
 									}, ARRAY_FILTER_USE_KEY );
 					
 // 					printArray($formConfig['fields']);exit();
+					$sqlCols=array_keys($formConfig['fields']);
+					$sqlCols[]="id";
 					
-					$sql=_db($dbKey)->_selectQ($source['table'],array_keys($formConfig['fields']),$whereCondition);
+					$sql=_db($dbKey)->_selectQ($source['table'],$sqlCols,$whereCondition);
 // 					exit($sql->_SQL());
 					//$data=$sql->_get();
 					//echo $sql->_SQL();printArray([$formConfig['fields'],$whereCondition]);
@@ -152,6 +154,11 @@ if(!function_exists("findInfoView")) {
 			}
 		
 		$formData=processFormData($formData,$formConfig);
+		if(isset($formData['id'])) {
+			$_ENV['INFOVIEW-REFID']=$formData['id'];
+		} else {
+			$_ENV['INFOVIEW-REFID']=0;
+		}
 		
 		$formConfig['data']=$formData;
 
@@ -197,9 +204,9 @@ if(!function_exists("findInfoView")) {
 					}
 				}
 				include __DIR__."/vendors/autoload.php";
-				echo _css(['infoview']);
+				echo _css(["bootstrap.datetimepicker",'infoview']);
 				include $f;
-				echo _js(['infoview']);
+				echo _js(["bootstrap.datetimepicker",'infoview']);
 				return true;
 			}
 		}
@@ -239,6 +246,7 @@ if(!function_exists("findInfoView")) {
 				$allow=checkUserPolicy($field['policy']);
 				if(!$allow) continue;
 			}
+			if(isset($fields['security'])) $field['security']=$fields['security'];
 			
 			if(!isset($field['label'])) {
 				$fieldKey=$field['fieldkey'];

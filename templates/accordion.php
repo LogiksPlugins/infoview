@@ -68,6 +68,8 @@ foreach ($groups as $nx=>$fkey) {
 	echo '<div class="panel-body">';
 	echo '<div class="infoviewbox"><div class="infoviewbox-content">';
 	echo "<div class='row'>";
+	$fieldGroups[$fkey]['security']['module']=$formConfig['srckey'];
+	$fieldGroups[$fkey]['security']['activity']=$fkey;
 	echo getInfoViewFieldset($fieldGroups[$fkey],$formData,$formConfig['dbkey']);
 	echo "</div>";
 	echo '</div></div>';

@@ -67,10 +67,53 @@ $(function() {
           }
     }
   });
+	
+	initInfoviewFields();
 });
 function viewpaneContentShown(src) {
 	callBack=$(src).data("onshowncallback");
 	if(callBack!=null && typeof window[callBack]=="function") {
 		window[callBack](src);
 	}
+}
+function initInfoviewFields() {
+	$("form select[data-value]",".infoTableView").each(function() {this.value=$(this).data('value');});
+	
+	$("form .nodb",".infoTableView").each(function() {
+		$(this).attr("name","");
+	});
+	
+	$("input.field-date",".infoTableView").each(function() {
+		$(this).datetimepicker({
+				format: 'DD/MM/YYYY'
+			});
+		});
+	$("input.field-datetime",".infoTableView").each(function() {$(this).datetimepicker({
+				format: 'DD/MM/YYYY HH:ss'
+			});
+		});
+	$("input.field-year",".infoTableView").each(function() {
+			//$(this).val("");
+			$(this).datetimepicker({
+				format: 'YYYY'
+			});
+		});
+	$("input.field-month",".infoTableView").each(function() {
+			//$(this).val("");
+			$(this).datetimepicker({
+				format: 'DD/MM'
+			});
+		});
+	$("input.field-time",".infoTableView").each(function() {
+			//$(this).val("");
+			$(this).datetimepicker({
+				format: 'HH:ss'
+			});
+		});
+	$("input.field-date,input.field-datetime,input.field-year,input.field-month,input.field-time",".infoTableView").on("dp.show",function (e) {
+    $(this).closest(".infoview-table").addClass("open-table");
+	});
+	$("input.field-date,input.field-datetime,input.field-year,input.field-month,input.field-time",".infoTableView").on("dp.hide",function (e) {
+    $(this).closest(".infoview-table").removeClass("open-table");
+	});
 }

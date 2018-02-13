@@ -25,7 +25,14 @@
   color: #AAA;
   font-weight: 300;
 }
-
+.infoviewbox .mouseAction {
+  cursor: pointer;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.infoTableView .infoview-table.open-table {
+  padding-bottom: 240px;
+}
 .infoview-content {
   
 }

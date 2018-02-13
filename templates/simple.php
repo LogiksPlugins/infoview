@@ -3,6 +3,8 @@ if(!defined('ROOT')) exit('No direct script access allowed');
 
 echo '<div class="formbox infoviewBox infoviewContainer" data-dcode="'.$dcode.'" data-dtuid="'.$dtuid.'"><div class="formbox-content infoview-content infoview-content-simple">';
 echo "<div class='row'>";
+$formConfig['fields']['security']['module']=$formConfig['srckey'];
+$formConfig['fields']['security']['activity']=$fkey;
 echo getInfoViewFieldset($formConfig['fields'],$formData,$formConfig['dbkey']);
 echo "</div>";
 echo '<hr class="hr-normal">';

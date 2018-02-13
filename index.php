@@ -17,6 +17,8 @@ if(isset($slug['dcode'])) {
   return;
 }
 
+if(is_numeric($dcode)) $dcode=md5($dcode);
+
 if(isset($_REQUEST['src']) && strlen($_REQUEST['src'])>0) {
 	$formConfig=findInfoView($_REQUEST['src']);
 	
