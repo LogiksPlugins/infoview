@@ -204,10 +204,19 @@ if(!function_exists("findInfoView")) {
 						}
 					}
 				}
+// 				printArray($formConfig);return;
 				include __DIR__."/vendors/autoload.php";
 				echo _css(["bootstrap.datetimepicker",'infoview']);
+				if(isset($formConfig['infoview']['style']) && strlen($formConfig['infoview']['style'])>0) {
+					echo _css(["infoview/{$formConfig['infoview']['style']}"]);
+				}
+				
 				include $f;
+				
 				echo _js(["bootstrap.datetimepicker",'infoview']);
+				if(isset($formConfig['infoview']['script']) && strlen($formConfig['infoview']['script'])>0) {
+					echo _js(["infoview/{$formConfig['infoview']['script']}"]);
+				}
 				return true;
 			}
 		}
@@ -221,7 +230,7 @@ if(!function_exists("findInfoView")) {
 			if(!isset($b['type'])) continue;
 			
 			switch($b['type']) {
-					
+				
 			}
 		}
 		
@@ -243,6 +252,10 @@ if(!function_exists("findInfoView")) {
 			}
 			if(substr($field['fieldkey'],0,2)=="__") continue;
 			
+			if(isset($field['infoview']) && !$field['infoview']) {
+				continue;
+			}
+			
 			if(isset($field['policy']) && strlen($field['policy'])>0) {
 				$allow=checkUserPolicy($field['policy']);
 				if(!$allow) continue;
@@ -261,6 +274,7 @@ if(!function_exists("findInfoView")) {
 			} else {
 				
 			}
+			
 			$html.="<div class='col-sm-{$field['width']} col-lg-{$field['width']} field-container'>";
 			
 			if(!isset($field['type'])) $field['type']="text";
@@ -295,6 +309,7 @@ if(!function_exists("findInfoView")) {
 			$allow=checkUserPolicy($fieldinfo['policy']);
 			if(!$allow) return "";
 		}
+		
 		$formKey=$fieldinfo['fieldkey'];
 		if(!isset($data[$formKey])) {
 			if(isset($fieldinfo['default'])) {
@@ -629,14 +644,23 @@ if(!function_exists("findInfoView")) {
 				}
 				break;
 			case 'source':
-				if(isset($fieldinfo['src']) && file_exists($fieldinfo['src'])) {
-					$_ENV['INFOVIEW']=$fieldinfo;
-					ob_start();
-					include $fieldinfo['src'];
-					$html.=ob_get_contents();
-					ob_clean();
+				if(isset($fieldinfo['src'])) {
+					if(file_exists($fieldinfo['src'])) {
+						$_ENV['INFOVIEW']=$fieldinfo;
+						ob_start();
+						include $fieldinfo['src'];
+						$html.=ob_get_contents();
+						ob_clean();
+					} elseif(file_exists(APPROOT.$fieldinfo['src'])) {
+						ob_start();
+						include APPROOT.$fieldinfo['src'];
+						$html.=ob_get_contents();
+						ob_clean();
+					} else {
+						$html.="Source '".basename($fieldinfo['src'])."' not found.";
+					}
 				} else {
-					$html.="Source '".basename($fieldinfo['src'])."' not found.";
+					$html.="Source '".basename($fieldinfo['src'])."' not defined.";
 				}
 				break;
 				
