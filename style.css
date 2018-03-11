@@ -19,6 +19,8 @@
   border:0px;
   box-shadow: none;
   font-family: inherit;
+  height:auto;
+  max-height:100px;
 }
 
 .infoviewbox label {

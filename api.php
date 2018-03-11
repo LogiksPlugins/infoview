@@ -180,30 +180,31 @@ if(!function_exists("findInfoView")) {
 		//printArray($templateArr);return;
 		foreach ($templateArr as $f) {
 			if(file_exists($f) && is_file($f)) {
-				if(isset($formConfig['preload'])) {
-					if(isset($formConfig['preload']['modules'])) {
-						loadModules($formConfig['preload']['modules']);
+				if(isset($formConfig['hooks']) && isset($formConfig['hooks']['preload'])) {
+					if(isset($formConfig['hooks']['preload']['modules'])) {
+						loadModules($formConfig['hooks']['preload']['modules']);
 					}
-					if(isset($formConfig['preload']['api'])) {
-						foreach ($formConfig['preload']['api'] as $apiModule) {
+					if(isset($formConfig['hooks']['preload']['api'])) {
+						foreach ($formConfig['hooks']['preload']['api'] as $apiModule) {
 							loadModuleLib($apiModule,'api');
 						}
 					}
-					if(isset($formConfig['preload']['helpers'])) {
-						loadHelpers($formConfig['preload']['helpers']);
+					if(isset($formConfig['hooks']['preload']['helpers'])) {
+						loadHelpers($formConfig['hooks']['preload']['helpers']);
 					}
-					if(isset($formConfig['preload']['method'])) {
-						if(!is_array($formConfig['preload']['method'])) $formConfig['preload']['method']=explode(",",$formConfig['preload']['method']);
-						foreach($formConfig['preload']['method'] as $m) call_user_func($m,$formConfig);
+					if(isset($formConfig['hooks']['preload']['method'])) {
+						if(!is_array($formConfig['hooks']['preload']['method'])) $formConfig['hooks']['preload']['method']=explode(",",$formConfig['hooks']['preload']['method']);
+						foreach($formConfig['hooks']['preload']['method'] as $m) call_user_func($m,$formConfig);
 					}
-					if(isset($formConfig['preload']['file'])) {
-						if(!is_array($formConfig['preload']['file'])) $formConfig['preload']['file']=explode(",",$formConfig['preload']['file']);
-						foreach($formConfig['preload']['file'] as $m) {
+					if(isset($formConfig['hooks']['preload']['file'])) {
+						if(!is_array($formConfig['hooks']['preload']['file'])) $formConfig['hooks']['preload']['file']=explode(",",$formConfig['hooks']['preload']['file']);
+						foreach($formConfig['hooks']['preload']['file'] as $m) {
 							if(file_exists($m)) include $m;
 							elseif(file_exists(APPROOT.$m)) include APPROOT.$m;
 						}
 					}
 				}
+				
 // 				printArray($formConfig);return;
 				include __DIR__."/vendors/autoload.php";
 				echo _css(["bootstrap.datetimepicker",'infoview']);
@@ -418,9 +419,9 @@ if(!function_exists("findInfoView")) {
 				break;
 			
 			case 'currency':
-				if(!isset($fieldinfo['currency_type'])) $fieldinfo['currency_type']="usd";
+				if(!isset($fieldinfo['currency_type'])) $fieldinfo['currency_type']="mxx";
 				
-				$html.="<div class='form-control-static field-{$formKey}' $xtraAttributes>{$data[$formKey]} <i class='fa fa-usd fa-{$fieldinfo['currency_type']} pull-left'></i></div>";
+				$html.="<div class='form-control-static field-{$formKey}' $xtraAttributes>{$data[$formKey]} <i class='fa fa-money fa-{$fieldinfo['currency_type']} pull-left'></i></div>";
 				break;
 			case 'creditcard':case 'debitcard':case 'moneycard':
 				if(!isset($fieldinfo['card_type'])) $fieldinfo['card_type']="credit-card";
