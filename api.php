@@ -211,6 +211,12 @@ if(!function_exists("findInfoView")) {
 				if(isset($formConfig['infoview']['style']) && strlen($formConfig['infoview']['style'])>0) {
 					echo _css(["infoview/{$formConfig['infoview']['style']}"]);
 				}
+
+				if(isset($_SESSION['INFOVIEW'][$_ENV['FORMKEY']]['data'])) {
+					foreach($_SESSION['INFOVIEW'][$_ENV['FORMKEY']]['data'] as $a=>$b) {
+						$_REQUEST[$a]=$b;
+					}
+				}
 				
 				include $f;
 				
