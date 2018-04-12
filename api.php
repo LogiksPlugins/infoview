@@ -406,6 +406,7 @@ if(!function_exists("findInfoView")) {
 			case 'textarea': case 'longtext': case 'richtextarea': case 'markup':
 				$data[$formKey]=stripslashes(str_replace("\\r\\n","",$data[$formKey]));
 				$data[$formKey]=stripslashes(str_replace("&amp%3B","&amp;",$data[$formKey]));
+				$data[$formKey]=stripslashes(str_replace("%3B",";",$data[$formKey]));
 				$html.="<pre class='{$class}' $xtraAttributes name='{$formKey}'>".$data[$formKey]."</pre>";
 				break;
 			
