@@ -272,7 +272,10 @@ if(!function_exists("findInfoView")) {
 			if(!isset($field['label'])) {
 				$fieldKey=$field['fieldkey'];
 				$field['label']=_ling($fieldKey);
+			} else {
+				$field['label']=_ling($field['label']);
 			}
+
 			if(!isset($field['width'])) $field['width']=6;
 			
 			if(isset($field['hidden']) && $field['hidden']==true) {
