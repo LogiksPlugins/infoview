@@ -72,8 +72,15 @@ $(function() {
 });
 function viewpaneContentShown(src) {
 	callBack=$(src).data("onshowncallback");
+	href=$(src).attr("href");
 	if(callBack!=null && typeof window[callBack]=="function") {
 		window[callBack](src);
+	} else {
+		infoTableGrid=$(src).closest(".infoviewContainer").find(href).find(".infoTableGrid");
+		cmdCallback=$(infoTableGrid).data("cmd");
+		if(cmdCallback!=null && typeof window[cmdCallback]=="function") {
+			window[cmdCallback](infoTableGrid,cmdCallback);
+        } 
 	}
 }
 function initInfoviewFields() {
