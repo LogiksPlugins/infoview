@@ -209,7 +209,7 @@ if(!function_exists("findInfoView")) {
 				include __DIR__."/vendors/autoload.php";
 				echo _css(["bootstrap.datetimepicker",'infoview']);
 				if(isset($formConfig['infoview']['style']) && strlen($formConfig['infoview']['style'])>0) {
-					echo _css(["infoview/{$formConfig['infoview']['style']}"]);
+					echo _css(["infoview/{$formConfig['infoview']['style']}",$formConfig['infoview']['style']]);
 				}
 
 				if(isset($_SESSION['INFOVIEW'][$_ENV['FORMKEY']]['data'])) {
@@ -222,7 +222,7 @@ if(!function_exists("findInfoView")) {
 				
 				echo _js(["bootstrap.datetimepicker",'infoview']);
 				if(isset($formConfig['infoview']['script']) && strlen($formConfig['infoview']['script'])>0) {
-					echo _js(["infoview/{$formConfig['infoview']['script']}"]);
+					echo _js(["infoview/{$formConfig['infoview']['script']}",$formConfig['infoview']['script']]);
 				}
 				return true;
 			}
