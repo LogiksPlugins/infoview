@@ -107,7 +107,7 @@ if(!function_exists("findInfoView")) {
 			$formData=$formConfig['data'];
 		}
 		
-    $source=$formConfig['source'];
+    	$source=$formConfig['source'];
 			switch ($source['type']) {
 				case 'sql':
 					if(isset($formConfig['config']['GUID_LOCK']) && $formConfig['config']['GUID_LOCK']===true) {
@@ -228,7 +228,7 @@ if(!function_exists("findInfoView")) {
 			}
 		}
 		trigger_logikserror("InfoView Template Not Found",null,404);
-  }
+  	}
 	
 	function processFormData($formData,$formConfig) {
 		$formFields=$formConfig['fields'];
