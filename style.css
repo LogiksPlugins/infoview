@@ -46,6 +46,10 @@
 .infoview-content .form-actions button {
   margin-left:20px;
 }
+.infoview-content .form-actions button.pull-left {
+  margin-left:0px;
+  margin-right:20px;
+}
 .infoview-content .form-actions .form-icon {
 
 }
