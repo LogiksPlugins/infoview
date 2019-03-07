@@ -34,8 +34,9 @@ foreach ($groups as $nx=>$fkey) {
 	$groupConfig=$fieldGroups[$fkey];
 	$title=toTitle(_ling($fkey));
 	$xtraIcon="";
+	$tabHash = md5($fkey.$nx);
 	if($nx==0) {
-		echo "<li role='presentation' class='active'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}' data-toggle='tab' onclick='viewpaneContentShown(this)' >{$title}</a></li>";
+		echo "<li role='presentation' class='active'><a href='#{$tabHash}' role='tab' aria-controls='{$tabHash}' data-toggle='tab' onclick='viewpaneContentShown(this)' >{$title}</a></li>";
 	} else {
 		if(in_array($fkey,$noTab)) {
 			$xtraAttribute='class="disabled"';
@@ -46,9 +47,9 @@ foreach ($groups as $nx=>$fkey) {
 			$xtraIcon='<i class="fa fa-exclamation-triangle pull-right" title="No available permission for this information"></i>';
 		}
 		if(isset($groupConfig[0]) && isset($groupConfig[0]['hidden']) && $groupConfig[0]['hidden']) {
-			$hiddenItems[]="<li {$xtraAttribute} role='presentation'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}'  data-toggle='tab' onclick='viewpaneContentShown(this)'>{$xtraIcon}{$title}</a></li>";
+			$hiddenItems[]="<li {$xtraAttribute} role='presentation'><a href='#{$tabHash}' role='tab' aria-controls='{$tabHash}'  data-toggle='tab' onclick='viewpaneContentShown(this)'>{$xtraIcon}{$title}</a></li>";
 		} else {
-			echo "<li {$xtraAttribute} role='presentation'><a href='#{$fkey}' role='tab' aria-controls='{$fkey}'  data-toggle='tab' onclick='viewpaneContentShown(this)'>{$xtraIcon}{$title}</a></li>";
+			echo "<li {$xtraAttribute} role='presentation'><a href='#{$tabHash}' role='tab' aria-controls='{$tabHash}'  data-toggle='tab' onclick='viewpaneContentShown(this)'>{$xtraIcon}{$title}</a></li>";
 		}
 	}
 }
@@ -71,10 +72,11 @@ foreach ($groups as $nx=>$fkey) {
 	if(in_array($fkey,$noTab)) {
 		continue;
 	}
+	$tabHash = md5($fkey.$nx);
 	if($nx==0) {
-		echo "<div role='tabpanel' class='tab-pane active' id='{$fkey}'>";
+		echo "<div role='tabpanel' class='tab-pane active' id='{$tabHash}'>";
 	} else {
-		echo "<div role='tabpanel' class='tab-pane' id='{$fkey}'>";
+		echo "<div role='tabpanel' class='tab-pane' id='{$tabHash}'>";
 	}
 	echo '<div class="infoviewbox"><div class="infoviewbox-content">';
 	echo "<div class='row'>";
