@@ -46,7 +46,7 @@ if(!function_exists("findInfoView")) {
 			return false;
 		}
     
-    if($params==null) $params=[];
+    	if($params==null) $params=[];
 		$formConfig=array_merge($formConfig,$params);
 		
 		if(!isset($formConfig['infoviewkey'])) $formConfig['infoviewkey']=md5(session_id().time());
@@ -250,7 +250,7 @@ if(!function_exists("findInfoView")) {
 		if(!is_array($fields)) return false;
 		//printArray($fields);
 		
-		$noLabelFields=["widget","source","module"];
+		$noLabelFields=["widget","source","module","template"];
 
 		$html="";//<fieldset>
 		foreach ($fields as $field) {
@@ -672,6 +672,30 @@ if(!function_exists("findInfoView")) {
 					}
 				} else {
 					$html.="Source '".basename($fieldinfo['src'])."' not defined.";
+				}
+				break;
+			case 'template':
+				if(isset($fieldinfo['src'])) {
+					if(file_exists($fieldinfo['src'])) {
+						ob_start();
+						_template($fieldinfo['src']);
+						$html.=ob_get_contents();
+						ob_clean();
+					} elseif(file_exists(APPROOT."misc/templates/".$fieldinfo['src'])) {
+						ob_start();
+						_template(APPROOT."misc/templates/".$fieldinfo['src']);
+						$html.=ob_get_contents();
+						ob_clean();
+					} elseif(file_exists(APPROOT.$fieldinfo['src'])) {
+						ob_start();
+						_template(APPROOT.$fieldinfo['src']);
+						$html.=ob_get_contents();
+						ob_clean();
+					} else {
+						$html.="Template '".basename($fieldinfo['src'])."' not defined.";
+					}
+				} else {
+					$html.="Template '".basename($fieldinfo['src'])."' not defined.";
 				}
 				break;
 				
