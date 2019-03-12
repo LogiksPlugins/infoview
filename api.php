@@ -11,7 +11,7 @@ if(!function_exists("findInfoView")) {
 		$fsArr=[
 				$file,
 				APPROOT.APPS_MISC_FOLDER."infoviews/{$file}.json",
-        APPROOT.APPS_MISC_FOLDER."forms/{$file}.json",
+        		APPROOT.APPS_MISC_FOLDER."forms/{$file}.json",
 			];
 		$file=false;
 		foreach ($fsArr as $fs) {
@@ -733,6 +733,8 @@ if(!function_exists("findInfoView")) {
 			}
 
 			if(!isset($button['type'])) $button['type']="button";
+
+			$key = _replace($key);
 
 			$html.="<button type='{$button['type']}' cmd='{$key}' class='{$button['class']}'>{$icon}{$label}</button>";
 		}
