@@ -13,6 +13,22 @@ if(!function_exists("findInfoView")) {
 				APPROOT.APPS_MISC_FOLDER."infoviews/{$file}.json",
         		APPROOT.APPS_MISC_FOLDER."forms/{$file}.json",
 			];
+			
+		if(isset($_REQUEST['forSite']) && defined("CMS_SITENAME")) {
+			$fsArr[]=ROOT."apps/".CMS_SITENAME."/".APPS_MISC_FOLDER."infoviews/{$file}.json";
+			$fsArr[]=ROOT."apps/".CMS_SITENAME."/".APPS_MISC_FOLDER."forms/{$file}.json";
+		}
+		
+		$fArr = explode("/",$file);
+		if(count($fArr)>1) {
+			$fPath = checkModule($fArr[0]);
+			if($fPath) {
+				unset($fArr[0]);
+				$fsArr[] = dirname($fPath)."/infoviews/".implode("/",$fArr).".json";
+				$fsArr[] = dirname($fPath)."/forms/".implode("/",$fArr).".json";
+			}
+		}
+		
 		$file=false;
 		foreach ($fsArr as $fs) {
 			if(file_exists($fs)) {
