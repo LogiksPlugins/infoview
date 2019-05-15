@@ -74,8 +74,10 @@ if(!function_exists("findInfoView")) {
 
 		$formConfig['dbkey']=$dbKey;
 
-		if(!isset($formConfig['template'])) {
+		if(!isset($formConfig['infoview']['template'])) {
 			$formConfig['template']="tabbed";
+		} else {
+			$formConfig['template']=$formConfig['infoview']['template'];
 		}
 		
 		if(!isset($formConfig['gotolink'])) {

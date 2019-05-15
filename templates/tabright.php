@@ -54,7 +54,7 @@ foreach ($groups as $nx=>$fkey) {
 	}
 }
 if(count($hiddenItems)>0) {
-	echo '<li role="presentation" class="dropdown pull-right">';
+	echo '<li role="presentation" class="dropdown">';
 	echo '<a href="#" class="dropdown-toggle" id="myInfoTabMenu1" data-toggle="dropdown" aria-controls="myInfoTabMenu1-contents" aria-expanded="true">';
 	echo 'Others<span class="caret"></span>';
 	echo '</a>';
@@ -98,11 +98,14 @@ echo '</div>';
 <style>
 .infoview-content {
     width: 90%;
-    border-right: 1px solid #ddd;
+/*     border-right: 1px solid #ddd; */
     overflow-x: hidden;
 }
 .tabs-right > .nav-tabs {
   border-bottom: 0;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .tab-content > .tab-pane,
@@ -122,6 +125,7 @@ echo '</div>';
   float: right;
   width: 10%;
   min-height: 50%;
+  height:100%;
 }
 
 .tabs-right > .nav-tabs > li > a {

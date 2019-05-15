@@ -98,11 +98,14 @@ echo '</div>';
 <style>
 .infoview-content {
     width: 90%;
-    border-left: 1px solid #ddd;
+/*     border-left: 1px solid #ddd; */
     overflow-x: hidden;
 }
 .tabs-right > .nav-tabs {
   border-bottom: 0;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .tab-content > .tab-pane,
@@ -117,11 +120,13 @@ echo '</div>';
 
 .tabs-right > .nav-tabs > li {
   float: none;
+  text-align:right;
 }
 .tabs-right > .nav-tabs {
   float: left;
   width: 10%;
   min-height: 50%;
+  height:100%;
 }
 
 .tabs-right > .nav-tabs > li > a {
