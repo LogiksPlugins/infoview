@@ -37,6 +37,13 @@ echo '<div class="panel-group infoview-content" id="accordion'.$accordionID.'" r
 foreach ($groups as $nx=>$fkey) {
 	$title=toTitle(_ling($fkey));
 	$panelID=md5($fkey);
+
+	if(in_array($fkey,$noTab)) {
+		if(getConfig("INFOVIEWTABLE_SHOW_DISABLED_TABS")!="true") {
+			continue;
+		}
+	}
+
 	echo '<div class="panel panel-default">';
 
 	echo '<div class="panel-heading" role="tab" id="heading'.$panelID.'">';

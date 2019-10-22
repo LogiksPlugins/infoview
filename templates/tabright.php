@@ -39,7 +39,11 @@ foreach ($groups as $nx=>$fkey) {
 		echo "<li role='presentation' class='active'><a href='#{$tabHash}' role='tab' aria-controls='{$tabHash}' data-toggle='tab' onclick='viewpaneContentShown(this)' >{$title}</a></li>";
 	} else {
 		if(in_array($fkey,$noTab)) {
-			$xtraAttribute='class="disabled"';
+			if(getConfig("INFOVIEWTABLE_SHOW_DISABLED_TABS")=="true") {
+				$xtraAttribute='class="disabled"';
+			} else {
+				continue;
+			}
 		} else {
 			$xtraAttribute='';
 		}
