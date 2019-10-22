@@ -94,6 +94,10 @@ if(!function_exists("findInfoView")) {
 			$formConfig['secure']=true;
 		}
 
+		if(strtolower(getConfig("APPS_STATUS"))!="production" && strtolower(getConfig("APPS_STATUS"))!="prod") {
+			setConfig("INFOVIEWTABLE_SHOW_DISABLED_TABS","true");
+		}
+
 		$fieldGroups=[];
 		foreach ($formConfig['fields'] as $fieldKey => $fieldset) {
 			if(!isset($fieldset['label'])) $fieldset['label']=_ling($fieldKey);
