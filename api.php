@@ -306,6 +306,10 @@ if(!function_exists("findInfoView")) {
 			} else {
 				
 			}
+
+			if(isset($field['noview']) && $field['noview']===true) {
+				continue;
+			}
 			
 			$html.="<div class='col-sm-{$field['width']} col-lg-{$field['width']} field-container'>";
 			
