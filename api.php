@@ -394,6 +394,11 @@ if(!function_exists("findInfoView")) {
 			case 'dataSelectorFromTable':
 				if(!isset($fieldinfo['groupBy']))	$fieldinfo['groupBy']=false;
 				if(!isset($fieldinfo['where'])) $fieldinfo['where']=[];
+
+				foreach ($fieldinfo['where'] as $key => $value) {
+					$fieldinfo['where'][$key] = _replace($value);
+				}
+
 				$sqlData=_db()->_selectQ($fieldinfo['table'],$fieldinfo['columns'],$fieldinfo['where'])
 						->_groupby(["group"=>$fieldinfo['groupBy'],"having"=>"value={$data[$formKey]}"])->_GET();
 				if(isset($sqlData[0])) {
@@ -403,6 +408,11 @@ if(!function_exists("findInfoView")) {
 				break;
 			case 'dataSelectorFromUniques':
 				if(!isset($fieldinfo['where'])) $fieldinfo['where']=[];
+
+				foreach ($fieldinfo['where'] as $key => $value) {
+					$fieldinfo['where'][$key] = _replace($value);
+				}
+
 				$sqlData=_db()->_selectQ($fieldinfo['table'],$fieldinfo['columns'],$fieldinfo['where'])
 						->_groupby(["group"=>$fieldinfo['col1'],"having"=>"value={$data[$formKey]}"])->_GET();
 				if(isset($sqlData[0])) {
@@ -410,7 +420,9 @@ if(!function_exists("findInfoView")) {
 				}
 				$html.="<div class='form-control-static field-{$formKey}' $xtraAttributes>{$data[$formKey]}</div>";
 				break;
-			case 'dataSelector': 
+			case 'dataSelector':
+				//$data[$formKey] = _replace($data[$formKey]);
+				
 				$sqlData=_db()->_selectQ(_dbTable("lists"),"title,value",["groupid"=>$fieldinfo['groupid'],"value"=>$data[$formKey]])->_GET();
 				if(isset($sqlData[0])) {
 					$data[$formKey]=$sqlData[0]['title'];
