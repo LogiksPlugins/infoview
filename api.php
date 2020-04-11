@@ -458,12 +458,15 @@ if(!function_exists("findInfoView")) {
 			case 'radio': case 'checkbox': 
 				$html.="<div class='form-control-static field-{$formKey}' $xtraAttributes>{$data[$formKey]}</div>";
 				break;
-			case 'date': case 'datetime': case 'month': case 'year'://case 'datetime-local': case 'week': case 'time':
+			case 'date': case 'datetime': case 'month': case 'year'://case 'datetime-local': case 'week': 
 				if($fieldinfo['type']!="time") {
 					if($data[$formKey]==null || strlen($data[$formKey])<=1 || $data[$formKey]==0) $data[$formKey]="";
 					else $data[$formKey]=_pDate($data[$formKey],"d/m/Y");
 				}
 				$html.="<div class='form-control-static field-{$formKey}' $xtraAttributes>{$data[$formKey]} <i class='fa fa-calendar pull-left'></i></div>";
+				break;
+			case 'time':
+				$html.="<div class='form-control-static field-{$formKey}' $xtraAttributes>{$data[$formKey]} <i class='fa fa-clock-o pull-left'></i></div>";
 				break;
 			
 			case 'currency':
@@ -788,6 +791,7 @@ if(!function_exists("searchMedia")) {
 				]);
 		} else {
 			$fs=_fs();
+			$fs->cd(APPS_USERDATA_FOLDER);
 		}
 		$mediaDir=$fs->pwd();
 		
