@@ -777,7 +777,7 @@ if(!function_exists("findInfoView")) {
 
 			$key = _replace($key);
 
-			$html.="<button type='{$button['type']}' cmd='{$key}' class='{$button['class']}'>{$icon}{$label}</button>";
+			$html.="<button type='{$button['type']}' cmd='{$key}' class='{$button['class']}' data-refid='"._replace("#refid#")."'>{$icon}{$label}</button>";
 		}
 		return $html;
   }
