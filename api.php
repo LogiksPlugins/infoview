@@ -585,7 +585,7 @@ if(!function_exists("findInfoView")) {
 							if($media) {
 								$html.="<div class='file-preview-thumb'>";
 								if($media['ext']=="png" || $media['ext']=="gif" || $media['ext']=="jpg" || $media['ext']=="jpeg") {
-									$html.="<img src='{$media['url']}' />";
+									$html.="<img src='{$media['url']}' style='max-height: 200px;' />";
 								} else {
 									$html.="<i class='fileicon fa ".getFileIcon($media['src'])."'></i>";
 								}
@@ -804,7 +804,7 @@ if(!function_exists("searchMedia")) {
 				"name"=>$mediaName,
 				"raw"=>$media,
 				"src"=>$media,
-				"url"=>getWebPath($media),
+				"url"=>getWebPath($media)."?".filemtime($media),
 				"size"=>filesize($media)/1024,
 				"ext"=>strtolower(end($ext)),
 			];
@@ -817,7 +817,7 @@ if(!function_exists("searchMedia")) {
 				"name"=>$mediaName,
 				"raw"=>$media,
 				"src"=>$mediaDir.$media,
-				"url"=>getWebPath($mediaDir.$media),
+				"url"=>getWebPath($mediaDir.$media)."?".filemtime($mediaDir.$media),
 				"size"=>filesize($mediaDir.$media)/1024,
 				"ext"=>strtolower(end($ext)),
 			];
