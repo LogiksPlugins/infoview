@@ -645,7 +645,7 @@ if(!function_exists("findInfoView")) {
 				}
 				$html.="</tr></thead>";
 				
-				$html.="<tbody>{$formKey}";
+				$html.="<tbody>";
 				if(isset($data[$formKey]) && strlen($data[$formKey])>2) {
 					$jsonData=json_decode(stripslashes($data[$formKey]),true);
 					if(!$jsonData) {
