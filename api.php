@@ -664,7 +664,7 @@ if(!function_exists("findInfoView")) {
 							$html.="<tr>".implode("",$hx)."</tr>";
 						}
 					} else {
-						$html.="<tr>{$data[$formKey]}</tr>";
+						$html.="<tr><td colspan=10>{$data[$formKey]}</td></tr>";
 					}
 				}
 				$html.="</tbody>";
