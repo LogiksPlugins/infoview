@@ -69,3 +69,9 @@
 .infoviewContainerTabs .nav.nav-tabs .fa-exclamation-triangle {
   font-size:10px;
 }
+.field-container img {
+}
+.field-container .file-preview-thumbnails img,  {
+    max-width: 100%;
+    max-height: 300px;
+}
