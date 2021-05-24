@@ -36,7 +36,7 @@ foreach ($groups as $nx=>$fkey) {
 	$xtraIcon="";
 	$tabHash = md5($fkey.$nx);
 	if($nx==0) {
-		echo "<li role='presentation' class='active'><a href='#{$tabHash}' role='tab' aria-controls='{$tabHash}' data-toggle='tab' onclick='viewpaneContentShown(this)' >{$title}</a></li>";
+		echo "<li role='presentation' class='active'><a class='active' href='#{$tabHash}' role='tab' aria-controls='{$tabHash}' data-toggle='tab' onclick='viewpaneContentShown(this)' >{$title}</a></li>";
 	} else {
 		if(in_array($fkey,$noTab)) {
 			if(getConfig("INFOVIEWTABLE_SHOW_DISABLED_TABS")=="true") {

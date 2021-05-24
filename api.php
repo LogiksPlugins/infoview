@@ -647,14 +647,24 @@ if(!function_exists("findInfoView")) {
 				
 				$html.="<tbody>";
 				if(isset($data[$formKey]) && strlen($data[$formKey])>2) {
-					$data[$formKey]=json_decode(stripslashes($data[$formKey]),true);
-					foreach($data[$formKey] as $dx) {
-						$hx=[];
-						$hx[]="<td width=25px><i class='fa fa-bars reorderRow'></i></td>";
-						foreach($dx as $dx1=>$dx2) {
-							$hx[]="<td><div class='form-control-static field-{$formKey}' name='{$formKey}[{$dx1}][]' $xtraAttributes>{$dx2}</div></td>";
+					$jsonData=json_decode(stripslashes($data[$formKey]),true);
+					if(!$jsonData) {
+						$jsonData=json_decode(stripcslashes($data[$formKey]),true);
+					}
+					if(!$jsonData) {
+						$jsonData=json_decode($data[$formKey],true);
+					}
+					if($jsonData) {
+						foreach($jsonData as $dx) {
+							$hx=[];
+							$hx[]="<td width=25px><i class='fa fa-bars reorderRow'></i></td>";
+							foreach($dx as $dx1=>$dx2) {
+								$hx[]="<td><div class='form-control-static field-{$formKey}' name='{$formKey}[{$dx1}][]' $xtraAttributes>{$dx2}</div></td>";
+							}
+							$html.="<tr>".implode("",$hx)."</tr>";
 						}
-						$html.="<tr>".implode("",$hx)."</tr>";
+					} else {
+						$html.="<tr><td colspan=10>{$data[$formKey]}</td></tr>";
 					}
 				}
 				$html.="</tbody>";
