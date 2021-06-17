@@ -137,7 +137,7 @@ if(!function_exists("findInfoView")) {
 					}
 					
 					$formConfig['fields'] = array_filter($formConfig['fields'], function($key){
-											return strpos($key, '__') !== 0;
+											return ((strpos($key, '__') !== 0) && !(isset($value['nodb']) && $value['nodb']));
 									}, ARRAY_FILTER_USE_KEY );
 					
 // 					printArray($formConfig['fields']);exit();
@@ -317,7 +317,7 @@ if(!function_exists("findInfoView")) {
 			
 			if(!in_array($field['type'],$noLabelFields)) {
 				$html.="<div class='form-group'>";
-				$html.="<label>{$field['label']}";
+				if(substr($field['label'],0,2)!="__") $html.="<label>{$field['label']}";
 				
 				if(isset($field['required']) && $field['required']==true) {
 					$html.="<span class='span-required'>*</span>";
@@ -325,7 +325,7 @@ if(!function_exists("findInfoView")) {
 				if(isset($field['tips']) && strlen($field['tips'])>1) {
 					$html.="<a href='{$field['tips']}' target=_blank class='field-tips pull-right fa fa-question-circle'></a>";
 				}
-				$html.="</label>";
+				if(substr($field['label'],0,2)!="__") $html.="</label>";
 				
 				$html.=getInfoViewField($field,$data,$dbKey);
 				$html.="</div>";
