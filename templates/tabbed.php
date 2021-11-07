@@ -24,12 +24,50 @@ foreach($formConfig['infoview']['groups'] as $a=>$b) {
 
 	$fieldGroups[$b['group']][]=$b;
 }
+if(isset($fieldGroups['common'])) {
+	$cgroup = $fieldGroups['common'];
+	unset($fieldGroups['common']);
 
-$groups=array_keys($fieldGroups);
+	$groups=array_keys($fieldGroups);
+
+	$fieldGroups['common'] = $cgroup;
+} else {
+	$groups=array_keys($fieldGroups);
+}
+
+// $groups=array_keys($fieldGroups);
 // printArray($fieldGroups);printArray($groups);
 $hiddenItems=[];
 $infoHash=md5(rand());
-echo '<div id="'.$infoHash.'" class="infoviewContainer infoviewContainerTabs" data-dcode="'.$dcode.'" data-dtuid="'.$dtuid.'"><ul class="nav nav-tabs">';
+echo '<div id="'.$infoHash.'" class="infoviewContainer infoviewContainerTabs" data-dcode="'.$dcode.'" data-dtuid="'.$dtuid.'">';
+if(isset($fieldGroups['common'])) {
+	echo "<div role='commonpanel' class='panel form-panel'>";
+	echo '<div class="formbox"><div class="formbox-content">';
+	echo "<div class='row'>";
+
+	$hasAvatar = array_search("avatar", array_column($fieldGroups['common'], 'type'));
+	
+	if($hasAvatar!==false) {
+		$fieldSet1 = $fieldGroups["common"];
+		unset($fieldSet1[$hasAvatar]);
+		
+		$avatarField = $fieldGroups["common"][$hasAvatar];
+		$avatarField['width'] = 12;
+
+		echo "<div class='col-xs-12 col-md-3 col-lg-2'>";
+		echo getInfoViewFieldset([$avatarField],$formData,$formConfig['dbkey'],$formConfig['mode']);
+		echo "</div>";
+		echo "<div class='col-xs-12 col-md-9 col-lg-10'>";
+		echo getInfoViewFieldset($fieldSet1,$formData,$formConfig['dbkey'],$formConfig['mode']);
+		echo "</div>";
+	} else {
+		echo getInfoViewFieldset($fieldGroups["common"],$formData,$formConfig['dbkey'],$formConfig['mode']);
+	}
+	echo "</div>";
+	echo '</div></div>';
+	echo "</div>";
+}
+echo '<ul class="nav nav-tabs">';
 foreach ($groups as $nx=>$fkey) {
 	$groupConfig=$fieldGroups[$fkey];
 	$title=toTitle(_ling($fkey));
