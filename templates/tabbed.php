@@ -9,6 +9,7 @@ $noTab=[];
 
 // printArray($formConfig['infoview']['groups']);
 foreach($formConfig['infoview']['groups'] as $a=>$b) {
+	if(isset($b['disabled']) && $b['disabled']) continue;
 	if(!isset($b['label'])) $b['label']=toTitle($a);
 	if(!isset($b['group'])) $b['group']=str_replace(" ","_",$b['label']);
 
