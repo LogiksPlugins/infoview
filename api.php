@@ -272,7 +272,7 @@ if(!function_exists("findInfoView")) {
 		if(!is_array($fields)) return false;
 		//printArray($fields);
 		
-		$noLabelFields=["widget","source","module","template"];
+		$noLabelFields=["widget","source","module","static2","header","avatar"];
 
 		$html="";//<fieldset>
 		foreach ($fields as $field) {
@@ -565,8 +565,38 @@ if(!function_exists("findInfoView")) {
 					$html.="</div></div>";
 				}
 				break;
-			
-			case 'photo':case 'photos':case 'image':case 'avatar':case 'gallery':
+			case "avatar":
+				$fieldHash=md5($formKey.time());
+				// $data[$formKey]="http://practice.dev.silkdemo.in/apps/app1/usermedia/profile_images/root.jpg";
+
+				$fieldinfo['multiple']=false;
+				if(!isset($fieldinfo['avatar_size'])) $fieldinfo['avatar_size'] = 120;
+
+				$html.="<div name='{$formKey}' class='file-input file-field-{$fieldinfo['type']}' $xtraAttributes><div class='file-preview' style='height:{$fieldinfo['avatar_size']}px;width:{$fieldinfo['avatar_size']}px;    margin: auto;'>";
+
+				$html.="<div class='file-drop-avatar' data-fhash='{$fieldHash}'><div class='file-upload'>";
+				if(isset($data[$formKey]) && strlen($data[$formKey])>0) {
+					if(substr($data[$formKey],0,7)=="http://" || substr($data[$formKey],0,8)=="https://") {
+						$media=[
+							"url"=>$data[$formKey]
+						];
+					} else {
+						$media=searchMedia($data[$formKey]);
+					}
+					if($media) {
+						$html.="<img src='{$media['url']}' alt='avatar' />";
+
+					} else {
+						$html.="<i class='fa fa-photo fa-3x'></i>";
+					}
+				} else {
+					$html.="<i class='fa fa-photo fa-3x'></i>";
+				}
+				$html.="</div>";
+				$html.="</div>";
+				$html.="</div></div>";
+				break;
+			case 'photo':case 'photos':case 'image':case 'gallery':
 				$fieldHash=md5($formKey.time());
 				
 				if($fieldinfo['type']=="avatar") {
