@@ -798,6 +798,8 @@ if(!function_exists("findInfoView")) {
   function getInfoViewActions($actions=[]) {
     $html="";
 		foreach ($actions as $key => $button) {
+			if(!isset($button['type'])) $button['type']="button";
+
 			if(isset($button['policy']) && strlen($button['policy'])>0) {
 				$allow=checkUserPolicy($button['policy']);
 				if(!$allow) continue;
@@ -808,16 +810,47 @@ if(!function_exists("findInfoView")) {
 
 			if(isset($button['icon']))  $icon=$button['icon'];
 			else $icon="";
-			
+
 			if(strlen($icon)>0 && $icon == strip_tags($icon)) {
 				$icon="<i class='{$icon}'></i> ";
 			}
 
-			if(!isset($button['type'])) $button['type']="button";
-
 			$key = _replace($key);
 
-			$html.="<button type='{$button['type']}' cmd='{$key}' class='{$button['class']}' data-refid='"._replace("#refid#")."'>{$icon}{$label}</button>";
+			switch($button['type']) {
+				case "dropdown":
+					$html.="<div class='btn-group'><button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>{$icon}{$label} <span class='caret'></span></button><ul class='dropdown-menu'>";
+
+  				if(isset($button['dropdown'])) {
+  					foreach($button['dropdown'] as $key1=>$button1) {
+  						if(!isset($button1['type'])) $button1['type']="button";
+
+							if(isset($button1['policy']) && strlen($button1['policy'])>0) {
+								$allow=checkUserPolicy($button1['policy']);
+								if(!$allow) continue;
+							}
+							if(!isset($button1['class'])) $button1['class']="btn btn-primary";
+							if(!isset($button1['label'])) $button1['label']=toTitle(_ling($key1));
+
+							if(!isset($button1['icon'])) $button1['icon']="";
+
+							if(strlen($button1['icon'])>0 && $button1['icon'] == strip_tags($button1['icon'])) {
+								$icon1="<i class='{$button1['icon']}'></i> ";
+							}
+
+							$key1 = _replace($key1);
+
+							$html.="<li><a href='#' cmd='{$key1}' class='{$button1['class']}' data-refid='"._replace("#refid#")."'>{$icon1}{$button1['label']}</a></li>";
+  					}
+  				}
+
+  				$html.="</ul></div>";
+				break;
+				case "button":
+				default:
+					$html.="<button type='{$button['type']}' cmd='{$key}' class='{$button['class']}' data-refid='"._replace("#refid#")."'>{$icon}{$label}</button>";
+				break;
+			}
 		}
 		return $html;
   }

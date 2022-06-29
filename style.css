@@ -6,6 +6,7 @@
     padding: 10px;
     background: white;
     display: block;
+    min-height: 300px;
 }
 .infoviewbox .infoviewBox-accordion {
   
@@ -45,12 +46,21 @@
   margin-bottom:5px;
 }
 .infoview-content .form-actions button {
-  margin-left:20px;
+  /*margin-left:20px;*/
 }
 .infoview-content .form-actions button.pull-left {
-  margin-left:0px;
-  margin-right:20px;
+  /*margin-left:0px;
+  margin-right:20px;*/
 }
+.infoview-content .form-actions {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .infoview-content .form-actions button {
+    margin: 0px;
+    border-left: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+  }
 .infoview-content .form-actions .form-icon {
 
 }
@@ -60,7 +70,15 @@
 .infoview-content .form-actions .form-icon.right {
     margin-right: 5px;
 }
-
+.infoview-content .form-actions .dropdown-menu {
+    padding-bottom: 0px;
+}
+.infoview-content .form-actions .dropdown-menu>li>a {
+    background-color: white;
+    border: 0px;
+    border-bottom: 1px solid #CCC;
+    text-align: left;
+}
 
 .infoviewbox .panel-group .panel+.panel {
   margin-top: 0px;
