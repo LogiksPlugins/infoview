@@ -42,7 +42,7 @@ $hiddenItems=[];
 $infoHash=md5(rand());
 echo '<div id="'.$infoHash.'" class="infoviewContainer infoviewContainerTabs tabs-right" data-dcode="'.$dcode.'" data-dtuid="'.$dtuid.'">';
 if(isset($fieldGroups['common'])) {
-	echo "<div role='commonpanel' class='panel form-panel'>";
+	echo "<div role='commonpanel' class='panel form-panel panel-common'>";
 	echo '<div class="formbox"><div class="formbox-content">';
 	echo "<div class='row'>";
 

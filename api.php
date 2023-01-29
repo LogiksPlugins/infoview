@@ -711,7 +711,7 @@ if(!function_exists("findInfoView")) {
 					ob_start();
 					loadWidget($fieldinfo['src']);
 					$html.=ob_get_contents();
-					ob_clean();
+					ob_end_clean();
 				} else {
 					$html.="Widget '{$fieldinfo['src']}' not found.";
 				}
@@ -724,12 +724,12 @@ if(!function_exists("findInfoView")) {
 						ob_start();
 						loadModuleComponent($src[0],$src[1]);
 						$html.=ob_get_contents();
-						ob_clean();
+						ob_end_clean();
 					} else {
 						ob_start();
 						loadModule($fieldinfo['src']);
 						$html.=ob_get_contents();
-						ob_clean();
+						ob_end_clean();
 					}
 				} else {
 					$html.="Module '{$fieldinfo['src']}' not found.";
@@ -742,12 +742,12 @@ if(!function_exists("findInfoView")) {
 						ob_start();
 						include $fieldinfo['src'];
 						$html.=ob_get_contents();
-						ob_clean();
+						ob_end_clean();
 					} elseif(file_exists(APPROOT.$fieldinfo['src'])) {
 						ob_start();
 						include APPROOT.$fieldinfo['src'];
 						$html.=ob_get_contents();
-						ob_clean();
+						ob_end_clean();
 					} else {
 						$html.="Source '".basename($fieldinfo['src'])."' not found.";
 					}
@@ -761,17 +761,17 @@ if(!function_exists("findInfoView")) {
 						ob_start();
 						_template($fieldinfo['src']);
 						$html.=ob_get_contents();
-						ob_clean();
+						ob_end_clean();
 					} elseif(file_exists(APPROOT."misc/templates/".$fieldinfo['src'])) {
 						ob_start();
 						_template(APPROOT."misc/templates/".$fieldinfo['src']);
 						$html.=ob_get_contents();
-						ob_clean();
+						ob_end_clean();
 					} elseif(file_exists(APPROOT.$fieldinfo['src'])) {
 						ob_start();
 						_template(APPROOT.$fieldinfo['src']);
 						$html.=ob_get_contents();
-						ob_clean();
+						ob_end_clean();
 					} else {
 						$html.="Template '".basename($fieldinfo['src'])."' not defined.";
 					}

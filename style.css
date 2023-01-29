@@ -24,7 +24,9 @@
   max-height:100px;
   white-space: pre-line;
 }
-
+.panel-common {
+  margin-bottom: 0px;
+}
 .infoviewbox label {
   color: #AAA;
   font-weight: 300;
@@ -93,7 +95,9 @@
     max-width: 100%;
     max-height: 300px;
 }
-
+.infoviewContainerVertical .infoviewbox .infoviewbox-content {
+  min-height: auto;
+}
 .infoviewContainer .file-input .file-preview .file-drop .file-upload,
   .infoviewContainer .file-input .file-preview .file-gallery .file-upload,
   .infoviewContainer .file-input .file-preview .file-drop-avatar .file-upload {
