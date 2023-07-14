@@ -15,11 +15,11 @@ foreach($formConfig['infoview']['groups'] as $a=>$b) {
 
 	$b['fieldkey']=$a;
 
-	if($formConfig['secure']) {
-		$access=checkUserRoles($formConfig['srckey'],$b['group'],"ACCESS");
+	if(isset($b['policy'])) {
+		$access=checkUserPolicy($b['policy']);
 		if(!$access) {
 			$noTab[]=$b['group'];
-// 			continue;
+			// continue;
 		}
 	}
 
