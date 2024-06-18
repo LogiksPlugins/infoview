@@ -173,6 +173,46 @@ if(!function_exists("findInfoView")) {
 						trigger_error("Form Data Source File Not Found");
 					}
 				break;
+				case "plugin":
+                                        if(isset($formConfig['source']['plugin']) && strlen($formConfig['source']['plugin'])>0) {
+                                                $pluginPath = checkModule($formConfig['source']['plugin']);
+                                                if($pluginPath) {
+                                                        $pluginPath = dirname($pluginPath);
+
+                                                        $dataFiles = [
+                                                                        $pluginPath."/data_forms.php",
+                                                                        $pluginPath."/data.php",
+                                                                ];
+
+                                                        $finalFile = false;
+                                                        foreach($dataFiles as $f) {
+                                                                if($finalFile) continue;
+                                                                if(file_exists($f)) {
+                                                                        $finalFile = $f;
+                                                                }
+                                                        }
+
+                                                        if($finalFile) {
+                                                                if(!isset($formConfig['source']['where'])) $formConfig['source']['where'] = [];
+
+                                                                $cols = $formConfig['fields'];
+                                                                $where = $formConfig['source']['where'];
+                                                                foreach($where as $a=>$b) {
+                                                                        $where[$a] = _replace($b);
+                                                                }
+
+                                                                $formConfig['mode'] = "fetch";
+                                                                $formData=include_once($finalFile);
+                                                        } else {
+                                                                //displayFormMsg("Sorry, Form Data - Plugin Does Not Support Plugin:Data Requirements");
+                                                        }
+                                                } else {
+                                                        // displayFormMsg("Sorry, Form Data - Plugin Not Found");
+                                                }
+                                        } else {
+                                                // displayFormMsg("Sorry, Form Submit Source Plugin Not Found.");
+                                        }
+                                break;
 			}
 		
 		$formData=processFormData($formData,$formConfig);
