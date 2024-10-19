@@ -138,14 +138,19 @@ if(!function_exists("findInfoView")) {
 					if(isset($formConfig['config']['GUID_LOCK']) && $formConfig['config']['GUID_LOCK']===true) {
 						$whereCondition["guid"]=$_SESSION['SESS_GUID'];
 					}
-					
+
 					$formConfig['fields'] = array_filter($formConfig['fields'], function($key){
 											return ((strpos($key, '__') !== 0) && !(isset($value['nodb']) && $value['nodb']));
 									}, ARRAY_FILTER_USE_KEY );
-					
-// 					printArray($formConfig['fields']);exit();
 					$sqlCols=array_keys($formConfig['fields']);
 					$sqlCols[]="id";
+
+					if($source['cols']) {
+						if(!is_array($source['cols'])) $source['cols'] = explode(',',$source['cols']);
+
+						$sqlCols = array_merge($source['cols'], $sqlCols);
+						$sqlCols = array_unique($source['cols']);
+					}
 					
 					$sql=_db($dbKey)->_selectQ($source['table'],$sqlCols,$whereCondition);
 // 					exit($sql->_SQL());
@@ -712,6 +717,7 @@ if(!function_exists("findInfoView")) {
 			case 'widget':
 				if(isset($fieldinfo['src'])) {
 					$_ENV['INFOVIEW']=$fieldinfo;
+					$_ENV['INFOVIEW_DATA']=$data;
 					ob_start();
 					loadWidget($fieldinfo['src']);
 					$html.=ob_get_contents();
@@ -723,6 +729,7 @@ if(!function_exists("findInfoView")) {
 			case 'module':
 				if(isset($fieldinfo['src'])) {
 					$_ENV['INFOVIEW']=$fieldinfo;
+					$_ENV['INFOVIEW_DATA']=$data;
 					$src=explode(".",$fieldinfo['src']);
 					if(count($src)>1 && strlen($src[1])>0) {
 						ob_start();
@@ -743,6 +750,7 @@ if(!function_exists("findInfoView")) {
 				if(isset($fieldinfo['src'])) {
 					if(file_exists($fieldinfo['src'])) {
 						$_ENV['INFOVIEW']=$fieldinfo;
+						$_ENV['INFOVIEW_DATA']=$data;
 						ob_start();
 						include $fieldinfo['src'];
 						$html.=ob_get_contents();
