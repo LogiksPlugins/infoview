@@ -145,7 +145,7 @@ if(!function_exists("findInfoView")) {
 					$sqlCols=array_keys($formConfig['fields']);
 					$sqlCols[]="id";
 
-					if($source['cols']) {
+					if(isset($source['cols']) && $source['cols']) {
 						if(!is_array($source['cols'])) $source['cols'] = explode(',',$source['cols']);
 
 						$sqlCols = array_merge($source['cols'], $sqlCols);
