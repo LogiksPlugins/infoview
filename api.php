@@ -320,7 +320,7 @@ if(!function_exists("findInfoView")) {
 		if(!is_array($fields)) return false;
 		//printArray($fields);
 		
-		$noLabelFields=["widget","source","module","static2","header","avatar"];
+		$noLabelFields=["widget","ajaxwidget","source","module","static2","header","avatar"];
 
 		$html="";//<fieldset>
 		foreach ($fields as $field) {
@@ -760,6 +760,41 @@ if(!function_exists("findInfoView")) {
 					$_ENV['INFOVIEW_DATA']=$data;
 					ob_start();
 					loadWidget($fieldinfo['src']);
+					$html.=ob_get_contents();
+					ob_end_clean();
+				} else {
+					$html.="Widget '{$fieldinfo['src']}' not found.";
+				}
+				break;
+			case 'ajaxwidget':
+				if(isset($fieldinfo['src'])) {
+					$_ENV['INFOVIEW']=$fieldinfo;
+					$_ENV['INFOVIEW_DATA']=$data;
+					// ob_start();
+					// loadWidget($fieldinfo['src']);
+					// $html.=ob_get_contents();
+					// ob_end_clean();
+
+					$infoviewWidgetID = "INFOVIEW_WIDGET_".uniqid();
+					if(!isset($_SESSION['INFOVIEW_WIDGET'])) $_SESSION['INFOVIEW_WIDGET'] = [];
+					$_SESSION['INFOVIEW_WIDGET'][$infoviewWidgetID] = [
+							"INFOVIEW"=> $_ENV['INFOVIEW'], 
+							"INFOVIEW_DATA"=> $_ENV['INFOVIEW_DATA'], 
+							"INFOVIEW_SLUG"=> _slug("a/b/c/d/e/f"),
+							"INFOVIEW_REQUEST"=> $_REQUEST,
+						];
+
+					ob_start();
+					?>
+					<div class='modules infoview ajaxwidget widget infoTableGrid' data-widgetid='<?=$infoviewWidgetID?>' data-cmd='ajaxloadWidget'></div>
+					<script>
+						function ajaxloadWidget(widgetPanel) {
+        			var widgetID =  $(widgetPanel).data('widgetid');
+        			$(widgetPanel).html("<div class='ajaxloading ajaxloading5'></div>");
+							$(widgetPanel).load(_link("popup/webcomps")+"widgetid="+widgetID)
+						}
+					</script>
+					<?php
 					$html.=ob_get_contents();
 					ob_end_clean();
 				} else {
