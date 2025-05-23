@@ -283,8 +283,10 @@ if(!function_exists("findInfoView")) {
 				}
 
 				if(isset($_SESSION['INFOVIEW'][$_ENV['FORMKEY']]['data'])) {
-					foreach($_SESSION['INFOVIEW'][$_ENV['FORMKEY']]['data'] as $a=>$b) {
-						$_REQUEST[$a]=$b;
+					if(is_array($_SESSION['INFOVIEW'][$_ENV['FORMKEY']]['data'])) {
+						foreach($_SESSION['INFOVIEW'][$_ENV['FORMKEY']]['data'] as $a=>$b) {
+							$_REQUEST[$a]=$b;
+						}
 					}
 				}
 				
@@ -448,10 +450,21 @@ if(!function_exists("findInfoView")) {
 					$fieldinfo['where'][$key] = _replace($value);
 				}
 
-				$sqlData=_db()->_selectQ($fieldinfo['table'],$fieldinfo['columns'],$fieldinfo['where'])
-						->_groupby(["group"=>$fieldinfo['groupBy'],"having"=>"value={$data[$formKey]}"])->_GET();
-				if(isset($sqlData[0])) {
-					$data[$formKey]=$sqlData[0]['title'];
+				$sqlData=_db()->_selectQ($fieldinfo['table'],$fieldinfo['columns'],$fieldinfo['where']);
+
+				if(isset($fieldinfo['multiple']) && $fieldinfo['multiple']==true) {
+					$sqlData = $sqlData->_groupby(["group"=>$fieldinfo['groupBy'],"having"=>"value IN ({$data[$formKey]})"]);
+				} else {
+					$sqlData = $sqlData->_groupby(["group"=>$fieldinfo['groupBy'],"having"=>"value={$data[$formKey]}"]);
+				}
+
+				$sqlData=$sqlData->_GET();
+				if($sqlData && isset($sqlData[0])) {
+					$temp = [];
+					foreach ($sqlData as $key => $value) {
+						$temp[] = $value['title'];
+					}
+					$data[$formKey] = implode(",", $temp);
 				}
 				$html.="<div class='form-control-static field-{$formKey}' $xtraAttributes>{$data[$formKey]}</div>";
 				break;
@@ -462,10 +475,24 @@ if(!function_exists("findInfoView")) {
 					$fieldinfo['where'][$key] = _replace($value);
 				}
 
-				$sqlData=_db()->_selectQ($fieldinfo['table'],$fieldinfo['columns'],$fieldinfo['where'])
-						->_groupby(["group"=>$fieldinfo['col1'],"having"=>"value={$data[$formKey]}"])->_GET();
-				if(isset($sqlData[0])) {
-					$data[$formKey]=$sqlData[0]['title'];
+				// $sqlData=_db()->_selectQ($fieldinfo['table'],$fieldinfo['columns'],$fieldinfo['where'])
+				// 		->_groupby(["group"=>$fieldinfo['col1'],"having"=>"value={$data[$formKey]}"])->_GET();
+						
+				$sqlData=_db()->_selectQ($fieldinfo['table'],$fieldinfo['columns'],$fieldinfo['where']);
+
+				if(isset($fieldinfo['multiple']) && $fieldinfo['multiple']==true) {
+					$sqlData = $sqlData->_groupby(["group"=>$fieldinfo['col1'],"having"=>"value IN ({$data[$formKey]})"]);
+				} else {
+					$sqlData = $sqlData->_groupby(["group"=>$fieldinfo['col1'],"having"=>"value={$data[$formKey]}"]);
+				}
+
+				$sqlData=$sqlData->_GET();
+				if($sqlData && isset($sqlData[0])) {
+					$temp = [];
+					foreach ($sqlData as $key => $value) {
+						$temp[] = $value['title'];
+					}
+					$data[$formKey] = implode(",", $temp);
 				}
 				$html.="<div class='form-control-static field-{$formKey}' $xtraAttributes>{$data[$formKey]}</div>";
 				break;
